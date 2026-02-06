@@ -1,5 +1,7 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import { useAutoScroll } from '@/hooks/useAutoScroll';
+import { EMAIL, CV_URL } from '@/lib/constants';
 
 export default function Terminal() {
   const [input, setInput] = useState('');
@@ -10,11 +12,7 @@ export default function Terminal() {
   ]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [history]);
+  useAutoScroll(scrollRef, [history]);
 
   const handleCommand = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,20 +29,18 @@ export default function Terminal() {
         response = "🤖 Informaticien passionné par la résolution de problèmes complexes.";
         break;
 
-      case 'contact':
+      case 'contact': {
         response = "📧 Tentative d'ouverture de votre client mail...";
-        // On crée un élément 'a' (lien) en mémoire
         const mailLink = document.createElement('a');
-        mailLink.href = "mailto:kanesoukeye538@gmail.com";
-        // On déclenche le clic immédiatement (sans setTimeout pour tester)
+        mailLink.href = `mailto:${EMAIL}`;
         mailLink.click();
         break;
+      }
 
       case 'cv':
         response = "📄 Téléchargement du CV en cours...";
-        // ACTION RÉELLE : Ouvre un PDF (à mettre dans le dossier /public)
         setTimeout(() => {
-          window.open('/CV_soukayeKane_ULAVAL.pdf', '_blank');
+          window.open(CV_URL, '_blank');
         }, 1000);
         break;
 

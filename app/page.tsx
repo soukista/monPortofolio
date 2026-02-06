@@ -1,10 +1,12 @@
 "use client";
 
 import React from 'react';
+import Image from "next/image";
 import { Github, Linkedin, Mail, Code2, Cpu, ExternalLink, Sparkles, FileText, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import Terminal from '@/components/Terminal';
 import ChatBot from '@/components/ChatBot'; 
+import { GITHUB_URL, LINKEDIN_URL, CV_URL, GMAIL_COMPOSE_URL } from '@/lib/constants';
 
 export default function Home() {
   return (
@@ -19,8 +21,18 @@ export default function Home() {
           <span className="font-bold text-xl tracking-tighter uppercase">Soukaye KANE</span>
         </div>
         <div className="hidden md:flex gap-8 text-sm font-medium text-slate-400">
-          <a href="https://github.com/soukista" target="_blank" className="hover:text-blue-400 transition-colors">GitHub</a>
-          <button className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-full transition-all border border-slate-700">
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-blue-400 transition-colors"
+          >
+            GitHub
+          </a>
+          <button
+            className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-full transition-all border border-slate-700"
+            aria-label="Ouvrir les options de contact"
+          >
             Contact
           </button>
         </div>
@@ -51,12 +63,29 @@ export default function Home() {
         </motion.div>
 
         {/* BLOC 2 : PHOTO */}
-        <motion.div whileHover={{ scale: 1.02 }} className="bg-slate-800 border border-slate-700 rounded-[2rem] overflow-hidden group relative">
-          <img src="/soukayekane.jpeg" alt="Soukaye Kane" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          className="bg-slate-800 border border-slate-700 rounded-[2rem] overflow-hidden group relative"
+        >
+          <Image
+            src="/soukayekane.jpeg"
+            alt="Portrait de Soukaye Kane"
+            fill
+            sizes="(min-width: 768px) 25vw, 100vw"
+            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+            priority
+          />
         </motion.div>
 
         {/* BLOC 3 : LINKEDIN */}
-        <motion.a href="https://www.linkedin.com/in/soukaye-kane-920006290" target="_blank" whileHover={{ y: -5 }} className="bg-[#0077b5] rounded-[2rem] p-6 flex flex-col justify-between group cursor-pointer">
+        <motion.a
+          href={LINKEDIN_URL}
+          target="_blank"
+          rel="noreferrer"
+          whileHover={{ y: -5 }}
+          className="bg-[#0077b5] rounded-[2rem] p-6 flex flex-col justify-between group cursor-pointer"
+          aria-label="Voir le profil LinkedIn de Soukaye"
+        >
           <Linkedin size={32} className="text-white" />
           <div>
             <p className="text-white font-bold text-lg leading-tight">LinkedIn</p>
@@ -65,13 +94,27 @@ export default function Home() {
         </motion.a>
 
         {/* BLOC 4 : GITHUB */}
-        <motion.a href="https://github.com/soukista" target="_blank" whileHover={{ y: -5 }} className="bg-slate-900/50 border border-slate-800 rounded-[2rem] p-6 flex flex-col justify-between hover:border-slate-600 transition-all cursor-pointer group">
+        <motion.a
+          href={GITHUB_URL}
+          target="_blank"
+          rel="noreferrer"
+          whileHover={{ y: -5 }}
+          className="bg-slate-900/50 border border-slate-800 rounded-[2rem] p-6 flex flex-col justify-between hover:border-slate-600 transition-all cursor-pointer group"
+          aria-label="Voir le profil GitHub de Soukaye"
+        >
           <Github size={32} className="group-hover:text-blue-400 transition-colors" />
           <p className="text-2xl font-bold text-white tracking-tight italic underline decoration-blue-500">GitHub</p>
         </motion.a>
 
         {/* BLOC 5 : CV */}
-        <motion.a href="/CV_soukayeKane_ULAVAL.pdf" target="_blank" whileHover={{ scale: 0.98 }} className="bg-white rounded-[2rem] p-6 flex flex-col justify-between group cursor-pointer">
+        <motion.a
+          href={CV_URL}
+          target="_blank"
+          rel="noreferrer"
+          whileHover={{ scale: 0.98 }}
+          className="bg-white rounded-[2rem] p-6 flex flex-col justify-between group cursor-pointer"
+          aria-label="Télécharger le CV de Soukaye Kane"
+        >
           <div className="bg-slate-100 h-10 w-10 rounded-lg flex items-center justify-center text-slate-900"><FileText size={24} /></div>
           <div>
             <p className="text-slate-900 font-bold text-lg">Mon CV</p>
@@ -92,7 +135,14 @@ export default function Home() {
         
 
         {/* BLOC 8 : GMAIL */}
-        <motion.a href="https://mail.google.com/mail/?view=cm&fs=1&to=kanesoukeye538@gmail.com" target="_blank" whileHover={{ scale: 0.98 }} className="bg-blue-600 rounded-[2rem] p-6 flex flex-col justify-between cursor-pointer">
+        <motion.a
+          href={GMAIL_COMPOSE_URL}
+          target="_blank"
+          rel="noreferrer"
+          whileHover={{ scale: 0.98 }}
+          className="bg-blue-600 rounded-[2rem] p-6 flex flex-col justify-between cursor-pointer"
+          aria-label="Envoyer un email à Soukaye via Gmail"
+        >
           <Mail size={32} className="text-white" />
           <p className="text-white font-bold text-lg leading-tight">Me contacter via Gmail</p>
         </motion.a>

@@ -1,7 +1,8 @@
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Bot, User, Sparkles } from 'lucide-react';
+import { X, Send, Bot, Sparkles } from 'lucide-react';
+import { useAutoScroll } from '@/hooks/useAutoScroll';
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,9 +11,7 @@ export default function ChatBot() {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  }, [messages]);
+  useAutoScroll(scrollRef, [messages]);
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +30,7 @@ export default function ChatBot() {
       });
       const data = await res.json();
       setMessages(prev => [...prev, { role: 'assistant', content: data.content }]);
-    } catch (error) {
+    } catch {
       setMessages(prev => [...prev, { role: 'assistant', content: "Désolé, j'ai un petit souci technique." }]);
     } finally {
       setIsLoading(false);
@@ -61,7 +60,11 @@ export default function ChatBot() {
                   </p>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="hover:rotate-90 transition-transform">
+              <button
+                onClick={() => setIsOpen(false)}
+                className="hover:rotate-90 transition-transform"
+                aria-label="Fermer le chatbot"
+              >
                 <X size={20}/>
               </button>
             </div>
@@ -79,7 +82,7 @@ export default function ChatBot() {
               ))}
               {isLoading && (
                 <div className="flex gap-2 items-center text-slate-500 text-xs italic">
-                  <Sparkles size={12} className="animate-spin" /> L'IA réfléchit...
+                  <Sparkles size={12} className="animate-spin" /> L’IA réfléchit...
                 </div>
               )}
             </div>
@@ -115,6 +118,7 @@ export default function ChatBot() {
         }}
         onClick={() => setIsOpen(!isOpen)}
         className="relative h-20 w-20 flex items-center justify-center group"
+        aria-label={isOpen ? "Fermer le chatbot" : "Ouvrir le chatbot"}
       >
         {/* Halo lumineux derrière le bonhomme */}
         <div className="absolute inset-0 bg-blue-500/30 blur-2xl rounded-full group-hover:bg-blue-500/50 transition-colors" />
@@ -135,7 +139,7 @@ export default function ChatBot() {
         {/* Bulle "Ask me" au survol */}
         {!isOpen && (
           <div className="absolute -left-24 bg-white text-blue-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
-            Besoin d'aide ?
+            Besoin d’aide ?
           </div>
         )}
       </motion.button>
